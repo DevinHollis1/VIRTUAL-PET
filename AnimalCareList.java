@@ -41,4 +41,14 @@ public class AnimalCareList {
         return "AnimalCareList [itemsForPet=" + itemsForPet + "]";
     }
 
+    public VirtualPet getPetByType(String type) {
+        for (VirtualPet pet : itemsForPet) {
+            if (pet.getType().equalsIgnoreCase(type)) {
+                return pet;
+            }
+        }
+        return null; // Pet with the specified type not found
+    }
+    
+
 }

@@ -1,54 +1,23 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class AnimalCareList {
+class AnimalCareList {
+    private List<VirtualPet> food = new ArrayList<>();
 
-    private List<VirtualPet> itemsForPet = new ArrayList<>();
-
-    public void addItemsForPet(VirtualPet pet){
-        itemsForPet.add(pet);
+    public void addItemsForPet(VirtualPet pet) {
+        food.add(pet);
     }
 
-    public List<VirtualPet> getFreshFood(){
-        return itemsForPet;
-    }
-
-    public void removeType(String type){
-        for (int i = 0; i < itemsForPet.size(); i++){
-            if (itemsForPet.get(i).getType().equals(type)){
-                itemsForPet.remove(i);
-                i--;
-            }
-        }
-    }
-
-    public int getType(String type){
-        int results = 0;
-        for(int i = 0; i < itemsForPet.size(); i++){
-            if (itemsForPet.get(i).getType().equals(type)){
-                results = itemsForPet.get(i).getFood();
-            }
-        }
-    return results;
-}
-
-    public List<VirtualPet> getFood(){
-        return itemsForPet;
-    }
-
-    @Override
-    public String toString(){
-        return "AnimalCareList [itemsForPet=" + itemsForPet + "]";
+    public List<VirtualPet> getFood() {
+        return food;
     }
 
     public VirtualPet getPetByType(String type) {
-        for (VirtualPet pet : itemsForPet) {
-            if (pet.getType().equalsIgnoreCase(type)) {
+        for (VirtualPet pet : food) {
+            if (pet.getType().equalsIgnoreCase(type) && !pet.hasFedType(type)) {
                 return pet;
             }
         }
-        return null; // Pet with the specified type not found
+        return null; // Pet with the specified type not found or already fed
     }
-    
-
 }

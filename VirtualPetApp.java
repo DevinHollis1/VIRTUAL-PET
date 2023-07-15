@@ -26,7 +26,7 @@ public class VirtualPetApp {
 
         while (!choice.equalsIgnoreCase("0")) {
             if (shouldDisplayMenu) {
-                displayMenu(petToFeed.getHunger(), petToFeed.getWater());
+                displayMenu(petToFeed.getHunger(), petToFeed.getWater(), 0);
                 shouldDisplayMenu = false;
             }
 
@@ -44,6 +44,9 @@ public class VirtualPetApp {
                 shouldDisplayMenu = true;
             } else if (choice.equals("3")) {
                 petToFeed = waterPet(animalCareList, scanner, petToFeed);
+                shouldDisplayMenu = true;
+            }else if (choice.equals("4")) {
+                petToFeed = putPetToSleep(scanner, petToFeed);
                 shouldDisplayMenu = true;
             }
         }
@@ -88,14 +91,16 @@ public class VirtualPetApp {
         waterUpdateThread.start();
     }
 
-    public static void displayMenu(int petToFeed, int petToWater) {
+    public static void displayMenu(int petToFeed, int petToWater, int energy) {
         System.out.println("\nTony the Tiger");
         System.out.println("Pounds of meat eaten: " + petToFeed);
         System.out.println("Water: " + petToWater + "\n");
+        System.out.println("Energy: " + energy + "%\n");
         System.out.println("Choose an option below!");
         System.out.println("1. Display available food");
         System.out.println("2. Feed Tony a meal");
         System.out.println("3. Give Tony water");
+        System.out.println("4. Put Tony to sleep");
         System.out.println("0. Exit\n");
     }
 
@@ -179,8 +184,43 @@ public class VirtualPetApp {
         if (pet.getHunger() >= 100 && pet.getWater() >= 100) {
             System.out.println("\n" + pet.getName() + " IS STUFFED AND HYDRATED!\n ROARRRR!!\n");
         }
-        displayMenu(pet.getHunger(), pet.getWater());
         return pet;
+    }
+    
+    private static VirtualPet putPetToSleep(Scanner scanner, VirtualPet pet) {
+        System.out.println("Enter the number of hours of sleep (maximum 10 hours): ");
+        int hours;
+        try {
+            hours = scanner.nextInt();
+            scanner.nextLine();
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid Response: Please enter a valid integer for the number of hours.");
+            scanner.nextLine();
+            shouldDisplayMenu = true;
+            return pet;
+        }
+    
+        // Cap the maximum sleep hours at 10
+        hours = Math.min(hours, 10);
+        int energyIncrement = hours * 10;
+        pet.increaseEnergy(energyIncrement);
+        System.out.println("You put " + pet.getName() + " to sleep for " + hours + " hours.\n");
+    
+        if (pet.getEnergy() >= 100) {
+            System.out.println("\n" + pet.getName() + " IS FULLY RESTED!\n");
+        }
+    
+        shouldDisplayMenu = true; // Set shouldDisplayMenu to true to trigger menu display
+        displayMenu(pet.getHunger(), pet.getWater(), calculateEnergy(pet));
+        return pet;
+    }
+    
+    
+
+    private static int calculateEnergy(VirtualPet pet) {
+        int foodEnergy = (int) (pet.getFood() * 0.25); // Calculate 25% of the total food
+        int waterEnergy = (int) (pet.getWater() * 0.25); // Calculate 25% of the total water
+        return Math.min(foodEnergy + waterEnergy, 100); // Cap the energy at 100
     }
 
     private static void tickHunger(VirtualPet pet) {

@@ -7,6 +7,7 @@ public class VirtualPet {
     private int food;
     private int hunger;
     private int water;
+    private int energy;
     private Map<String, Integer> fedFoodTypes;
 
     public VirtualPet(String type, String name, int food, int water) {
@@ -17,6 +18,7 @@ public class VirtualPet {
         this.fedFoodTypes = new HashMap<>();
         setHunger(hunger); // Call the setter method to cap the hunger level
         setWater(water); // Call the setter method to cap the water level
+        setEnergy(energy); // Call the setter method to cap the energy level
     }
 
     public String getName() {
@@ -83,6 +85,26 @@ public class VirtualPet {
         }
     }
 
+    public void setEnergy(int energy) {
+        this.energy = Math.min(energy, 100);
+    }
+
+    public int getEnergy() {
+        return energy;
+    }
+
+    public void increaseEnergy(int amount) {
+        energy += amount;
+        energy = Math.min(energy, 100); // Cap the energy level at 100
+    }
+
+    public void decreaseEnergy(int amount) {
+        energy -= amount;
+        if (energy < 0) {
+            energy = 0;
+        }
+    }
+
     public void feedFoodType(String foodType, int foodAmount) {
         fedFoodTypes.put(foodType, foodAmount);
     }
@@ -106,11 +128,7 @@ public class VirtualPet {
     public void addFoodAmount(String foodType, int amount) {
         food += amount;
     }
-    
-    public int getFedFoodAmount(String foodType) {
-        return fedFoodTypes.getOrDefault(foodType, 0);
-    }
-    
+
     public void decreaseFoodAmount(String foodType, int amount) {
         food -= amount;
         if (food < 0) {
@@ -120,6 +138,6 @@ public class VirtualPet {
 
     @Override
     public String toString() {
-        return "VirtualPet [type=" + type + ", food=" + food + ", hunger=" + hunger + ", water=" + water + "]";
+        return "VirtualPet [type=" + type + ", food=" + food + ", hunger=" + hunger + ", water=" + water + ", energy=" + energy + "]";
     }
 }

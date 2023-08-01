@@ -43,7 +43,9 @@ public class VirtualPetShelterApp {
             System.out.println("8. Display all animals in the shelter");
             System.out.println("9. Take a pet to the vet");
             System.out.println("10. Adopt a pet");
-            System.out.println("11. Quit");
+            System.out.println("11. Put pets to sleep");
+            System.out.println("12. Groom Pets");
+            System.out.println("13. Exit Shelter");
             System.out.print("Enter your choice: ");
             choice = scanner.nextInt();
             scanner.nextLine(); // Consume the newline after reading the integer
@@ -80,7 +82,13 @@ public class VirtualPetShelterApp {
                     adoptNewPet(scanner, petShelter);
                     adopted = true; // Mark that an adoption has been made
                     break;
-                case 11:
+                    case 11:
+                    putAllPetsToSleepByType(scanner, petShelter);
+                    break;                
+                    case 12:
+                    groomPets(scanner, petShelter);
+                    break;
+                    case 13:
                     System.out.println("Thank you for visiting the Virtual Pet Shelter!");
                     break;
                 default:
@@ -93,7 +101,9 @@ public class VirtualPetShelterApp {
                 adopted = false; // Reset the adoption flag for the next iteration
             }
 
-        } while (choice != 11);
+            tickAllPets(petShelter);
+
+        } while (choice != 13);
 
         scanner.close();
     }
@@ -115,10 +125,65 @@ public class VirtualPetShelterApp {
         VirtualPet pet = petShelter.get(petName);
         if (pet != null) {
             pet.feed();
+            if (pet.getType().equalsIgnoreCase("dog")) {
+                // Print the dog image only if the pet is a dog
+                System.out.println("            Wag  _,) WaG\r\n" + 
+                        "        _..._.-;-'\r\n" + 
+                        "     .-'     `(\r\n" + 
+                        "    /      ;   \\\r\n" + 
+                        "   ;.' ;`  ,;  ;\r\n" + 
+                        "  .'' ``. (  \\ ;\r\n" + 
+                        " / f_ _L \\ ;  )\\\r\n" + 
+                        " \\/|` '|\\/;; <;/\r\n" + 
+                        "((; \\_/  (()       BaRk BaRK!\r\n" + 
+                        "     \" 8====8");
+            } else if(pet.getType().equalsIgnoreCase("cat")){
+                System.out.println("        _..---...,\"\"-._     ,/}/)\r\n" + //
+                        "     .''        ,      ``..'(/-<\r\n" + //
+                        "    /   _      {      )         \\\r\n" + //
+                        "   ;   _ `.     `.   <         a(\r\n" + //
+                        " ,'   ( \\  )      `.  \\ __.._ .: y\r\n" + //
+                        "(  <\\_-) )'-.____...\\  `._   //-' ><_>\r\n" + //
+                        " `. `-' /-._)))      `-._)))\r\n" +
+                        "   `...'         MeOw MeOw!");
+            } else if ( pet.getType().equalsIgnoreCase("lizard")){
+                System.out.println("                      )/_\r\n" + //
+                        "               _.--..---\"-,--0_\r\n" + //
+                        "          \\L..'           ._0__)_____ 8\r\n" + //
+                        "  ,-.     _.+  _  \\..--( /           \r\n" + //
+                        "    `\\.-''__.-' \\ (     \\_      \r\n" + //
+                        "      `'''       `\\__   /\\\r\n" + //
+                        "                  ')");
+            } else if (pet.getType().equalsIgnoreCase("bird")){
+                System.out.println(" ,`````.          _________\r\n" + //
+                        "' WhOO!  `,      /_  ___   \\\r\n" + //
+                        "'         `.    /@ \\/@  \\   \\\r\n" + //
+                        " ` , . , '  `.. \\__/\\___/   /\r\n" + //
+                        "                 \\_\\/______/\r\n" + //
+                        "                  /     /\\\\\\\\\\\r\n" + //
+                        "                 |     |\\\\\\\\\\\\\r\n" + //
+                        "                 \\      \\\\\\\\\\\\\r\n" + //
+                        "                  \\______/\\\\\\\\   \r\n" + //
+                        " ()()        _______ ||_||_______\r\n" +
+                        " (..)       (______(((_(((______(@)" );
+            } else if (pet.getType().equalsIgnoreCase("tiger")){
+                System.out.println("     (^\\-==-/^)\r\n" + //
+                        "     >\\\\ == //<\r\n" + //
+                        "    :== q''p ==:     _\r\n" + //
+                        "     .__ qp __.    .' )\r\n" + //
+                        "      / ^--^ \\    /\\.'\r\n" + //
+                        "     /_`    / )  '\\/\r\n" + //
+                        "     (  )  \\  |-'-/\r\n" + //
+                        "     \\^^,   |-|--'\r\n" + //
+                        "    ( `'    |_| )\r\n" + //
+                        "     \\-     |-|/\r\n" + //
+                        "    (( )^---( )) RoARRR!!!");
+            }
         } else {
             System.out.println("Pet not found in the shelter with the given name.");
         }
     }
+    
 
     // Play with a specific pet
     private static void playWithPet(Scanner scanner, Map<String, VirtualPet> petShelter) {
@@ -142,7 +207,35 @@ public class VirtualPetShelterApp {
             System.out.println("Pet not found in the shelter with the given name.");
         }
     }
+    
+    private static void putAllPetsToSleepByType(Scanner scanner, Map<String, VirtualPet> petShelter) {
+        System.out.print("Enter the 'type' of the pet (type 'all' to put all pets to sleep): ");
+        String petType = scanner.next().toLowerCase();
+    
+        if (petType.equalsIgnoreCase("all")) {
+            for (VirtualPet pet : petShelter.values()) {
+                pet.putToSleep(8); // Assuming 8 hours of sleep for all pets
+            }
+            System.out.println("You've locked down the cages, and all animals are asleep.");
+        } else {
+            int count = 0;
+            for (VirtualPet pet : petShelter.values()) {
+                if (pet.getType().equalsIgnoreCase(petType)) {
+                    pet.putToSleep(8); // Assuming 8 hours of sleep for specific pet type
+                    count++;
+                }
+            }
+            if (count > 0) {
+                System.out.println("All " + petType + "s are asleep.");
+            } else {
+                System.out.println("No " + petType + " found in the shelter.");
+            }
+        }
+    }
+    
 
+
+    
     private static void checkPetStatus(Scanner scanner, Map<String, VirtualPet> petShelter) {
         System.out.print("Enter the name of the pet you want to check (type 'all' for all pets): ");
         String petName = scanner.next();
@@ -178,7 +271,40 @@ public class VirtualPetShelterApp {
         } else {
             System.out.println("Pet not found in the shelter with the given name.");
         }
+    } 
+
+    private static void groomPets(Scanner scanner, Map<String, VirtualPet> petShelter) {
+        System.out.print("Enter the type or name of the pet you want to groom: ");
+        String input = scanner.next();
+    
+        boolean isType = false;
+    
+        // Check if the input is a type
+        for (VirtualPet pet : petShelter.values()) {
+            if (pet.getType().equalsIgnoreCase(input)) {
+                isType = true;
+                break;
+            }
+        }
+    
+        if (isType) {
+            // Groom all pets of the specified type
+            for (VirtualPet pet : petShelter.values()) {
+                if (pet.getType().equalsIgnoreCase(input)) {
+                    showGroomingMenu(scanner, pet); // Show grooming menu for each pet of the specified type
+                }
+            }
+        } else {
+            // Groom the specific pet by name
+            VirtualPet pet = petShelter.get(input);
+            if (pet != null) {
+                showGroomingMenu(scanner, pet); // Show grooming menu for the specific pet
+            } else {
+                System.out.println("Pet not found in the shelter with the given type or name.");
+            }
+        }
     }
+
     
     private static void adoptNewPet(Scanner scanner, Map<String, VirtualPet> petShelter) {
         System.out.print("Enter the type of the pet (dog, cat, lizard, bird): ");
@@ -206,6 +332,51 @@ public class VirtualPetShelterApp {
         scanner.nextLine();
     }
     
+    private static void showGroomingMenu(Scanner scanner, VirtualPet pet) {
+        boolean grooming = true;
+    
+        while (grooming) {
+            System.out.println("\nGrooming Options for " + pet.getName() + ":");
+            System.out.println("A. Brush pet's fur");
+            System.out.println("B. Clip pet's nails");
+            System.out.println("C. Give pet a bath");
+            System.out.println("D. Give pet a treat");
+            System.out.println("E. Exit grooming");
+    
+            System.out.print("Select grooming option: ");
+            String option = scanner.next().toUpperCase();
+    
+            switch (option) {
+                case "A":
+                    System.out.println(pet.getName() + " has been brushed.");
+                    // Perform brushing operation on the pet (add or subtract attributes as needed)
+                    pet.setHappiness(pet.getHappiness() + 5);
+                    pet.setHygiene(pet.getHygiene() + 2);
+                    break;
+                case "B":
+                    System.out.println(pet.getName() + "'s nails have been clipped.");
+                    pet.setHygiene(pet.getHygiene() + 2);
+                    break;
+                case "C":
+                    System.out.println(pet.getName() + " has taken a bath.");
+                    pet.setHealth(pet.getHealth() + 2);
+                    pet.setHygiene(pet.getHygiene() + 4);
+                    break;
+                case "D":
+                    System.out.println(pet.getName() + " has been given a treat.");
+                    pet.setHunger(pet.getHunger() - 5);
+                    break;
+                case "E":
+                    System.out.println("Exiting grooming for " + pet.getName() + ".");
+                    grooming = false;
+                    break;
+                default:
+                    System.out.println("Invalid grooming option.");
+                    break;
+            }
+        }
+    }
+    
 
     private static void displayAdoptionPaperwork(String adopterName, String phoneNumber, String address, VirtualPet adoptedPet) {
         System.out.println("\n|--- Adoption Paperwork ---|");
@@ -227,7 +398,6 @@ public class VirtualPetShelterApp {
         petShelter.put(key, newPet);
         System.out.println("You donated a new " + petType + " named " + petName + ".");
     }
-    
 
     private static void searchPet(Scanner scanner, Map<String, VirtualPet> petShelter) {
         System.out.print("Enter the type of the pet: ");
@@ -238,13 +408,15 @@ public class VirtualPetShelterApp {
         
         VirtualPet pet = petShelter.get(petName);
         if (pet != null && pet.getType().equalsIgnoreCase(petType)) {
-            System.out.println("|----- " + pet.getName() + "'s Status -----|");
-            System.out.println("Type: " + pet.getType() + "\n");
+            System.out.println("\n|----- " + pet.getName() + "'s Status -----|");
+            System.out.println("Type: " + pet.getType());
             System.out.println("Hunger: " + pet.getHunger());
             System.out.println("Happiness: " + pet.getHappiness());
             System.out.println("Thirst: " + pet.getThirst());
             System.out.println("Health: " + pet.getHealth());
             System.out.println("Sadness: " + pet.getSadness());
+            System.out.println("Energy: " + pet.getSleep());
+            System.out.println("Hygiene: " + pet.getHygiene());
             System.out.println("|--------------------------|");
         } else {
             System.out.println("Pet not found in the shelter with the given type and name.");
@@ -257,6 +429,12 @@ public class VirtualPetShelterApp {
             System.out.println("Type: " + pet.getType() + "    " + "Name: " + pet.getName());
         }
         System.out.println("|-----------------------------------------|");
+    }
+
+    private static void tickAllPets(Map<String, VirtualPet> petShelter) {
+        for (VirtualPet pet : petShelter.values()) {
+            pet.tick();
+        }
     }
 }
 

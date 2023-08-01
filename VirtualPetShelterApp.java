@@ -127,7 +127,7 @@ public class VirtualPetShelterApp {
             pet.feed();
             if (pet.getType().equalsIgnoreCase("dog")) {
                 // Print the dog image only if the pet is a dog
-                System.out.println("            Wag  _,) WaG\r\n" + 
+                System.out.println("              _,)\r\n" + 
                         "        _..._.-;-'\r\n" + 
                         "     .-'     `(\r\n" + 
                         "    /      ;   \\\r\n" + 

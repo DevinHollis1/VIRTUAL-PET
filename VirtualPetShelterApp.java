@@ -127,7 +127,7 @@ public class VirtualPetShelterApp {
             pet.feed();
             if (pet.getType().equalsIgnoreCase("dog")) {
                 // Print the dog image only if the pet is a dog
-                System.out.println("              _,)\r\n" + 
+                System.out.println("            Wag  _,) WaG\r\n" + 
                         "        _..._.-;-'\r\n" + 
                         "     .-'     `(\r\n" + 
                         "    /      ;   \\\r\n" + 
@@ -237,28 +237,41 @@ public class VirtualPetShelterApp {
 
     
     private static void checkPetStatus(Scanner scanner, Map<String, VirtualPet> petShelter) {
-        System.out.print("Enter the name of the pet you want to check (type 'all' for all pets): ");
-        String petName = scanner.next();
+    System.out.print("Enter the name of the pet you want to check (type 'all' for all pets): ");
+    String petName = scanner.nextLine().trim(); // Use nextLine() to read the whole line and trim whitespaces
 
-        if (petName.equalsIgnoreCase("all")) {
-            displayAllPetStatuses(petShelter);
-        } else {
-            VirtualPet pet = petShelter.get(petName);
-            if (pet != null) {
-                pet.checkStatus();
-            } else {
-                System.out.println("Pet not found in the shelter with the given name.");
-            }
-        }
-    }
-
-    private static void displayAllPetStatuses(Map<String, VirtualPet> petShelter) {
-        System.out.println("\n|----- All Pets' Statuses -----|");
-        for (VirtualPet pet : petShelter.values()) {
+    if (petName.equalsIgnoreCase("all")) {
+        displayAllPetStatuses(petShelter);
+    } else {
+        VirtualPet pet = petShelter.get(petName);
+        if (pet != null) {
             pet.checkStatus();
+        } else {
+            System.out.println("Pet not found in the shelter with the given name.");
         }
-        System.out.println("|--------------------------------|");
     }
+}
+
+private static void displayAllPetStatuses(Map<String, VirtualPet> petShelter) {
+    System.out.println("\n|----- All Pets' Statuses -----|");
+    System.out.println(String.format("%-8s| %-7s| %-7s| %-8s| %-7s| %-7s| %-7s", "Name", "Hunger", "Thirst", "Boredom", "Health", "Energy", "Hygiene"));
+    System.out.println("--------|-------|-------|--------|--------|--------|--------");
+
+    for (VirtualPet pet : petShelter.values()) {
+        String name = pet.getName();
+        int hunger = pet.getHunger();
+        int thirst = pet.getThirst();
+        int happiness = pet.getHappiness();
+        int health = pet.getHealth();
+        int sleep = pet.getSleep();
+        int hygiene = pet.getHygiene();
+
+        System.out.println(String.format("%-8s| %-7d| %-7d| %-8d| %-7d| %-7d| %-7d", name, hunger, thirst, happiness, health, sleep, hygiene));
+    }
+
+    System.out.println("|----------------------------|");
+}
+
 
     private static void takePetToVet(Scanner scanner, Map<String, VirtualPet> petShelter) {
         System.out.print("Enter the name of the pet you want to take to the vet: ");
@@ -436,6 +449,7 @@ public class VirtualPetShelterApp {
             pet.tick();
         }
     }
+    
 }
 
 

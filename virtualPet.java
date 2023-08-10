@@ -158,8 +158,14 @@ public class VirtualPet {
         hunger += 7;
         thirst += 4;
         sleep += hoursOfSleep;
-        System.out.println(name + " got " + hoursOfSleep + " hours of sleep!");
+        
+        if (type.equalsIgnoreCase("robot")) {
+            System.out.println(name + " got " + hoursOfSleep + " hours on the charger!");
+        } else {
+            System.out.println(name + " got " + hoursOfSleep + " hours of sleep!");
+        }
     }
+    
 
     public void tick() {
         long currentTime = System.currentTimeMillis();
@@ -171,7 +177,7 @@ public class VirtualPet {
         thirst += 5 * tickMultiplier;
         sleep -= 5 * tickMultiplier;
         hygiene -= 3 * tickMultiplier;
-        sadness += 2 * tickMultiplier;
+        happiness -= 2 * tickMultiplier;
 
         lastTickTime = currentTime; // Update the last tick time
 
@@ -180,7 +186,7 @@ public class VirtualPet {
         thirst = Math.min(thirst, 100);
         sleep = Math.max(0, sleep);
         hygiene = Math.max(0, hygiene);
-        sadness = Math.max(0, sadness);
+        happiness = Math.max(0,happiness);
     }
 
     public void checkStatus() {
@@ -194,7 +200,6 @@ public class VirtualPet {
         System.out.println("Energy: " + sleep);
         System.out.println("Hygiene: " + hygiene);
         System.out.println("-------------------------");
-        System.out.println("are the animals ok?");
     }
 }
 

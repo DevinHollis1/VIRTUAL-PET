@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class VirtualPetShelterApp {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Welcome to the Virtual Pet Shelter!");
+        System.out.println("Welcome to the Virtual Pet Paradise!");
 
         Map<String, VirtualPet> petShelter = new HashMap<>();
 
@@ -18,15 +18,20 @@ public class VirtualPetShelterApp {
         VirtualPet larry = new VirtualPet("Larry", "Lizard");
         VirtualPet ruby = new VirtualPet("Ruby", "Bird");
         VirtualPet tony = new VirtualPet("Tony", "Tiger");
+        VirtualPet java = new VirtualPet("Java", "Robot");
+        VirtualPet elon = new VirtualPet("Elon", "Robot");
 
         petShelter.put(wyatt.getName(), wyatt);
         petShelter.put(snickers.getName(), snickers);
         petShelter.put(ghost.getName(), ghost);
         petShelter.put(kanen.getName(), kanen);
         petShelter.put(boomer.getName(), boomer);
-        petShelter.put(larry.getName(),larry);
+        petShelter.put(larry.getName(), larry);
         petShelter.put(ruby.getName(), ruby);
         petShelter.put(tony.getName(), tony);
+        // Create Robot pets
+        petShelter.put(java.getName(), (VirtualPet) java);
+        petShelter.put(elon.getName(), (VirtualPet) elon);
 
         boolean adopted = false;
         int choice;
@@ -45,7 +50,8 @@ public class VirtualPetShelterApp {
             System.out.println("10. Adopt a pet");
             System.out.println("11. Put pets to sleep");
             System.out.println("12. Groom Pets");
-            System.out.println("13. Exit Shelter");
+            System.out.println("13. Robot animal care");
+            System.out.println("14. Exit Pet Paradise");
             System.out.print("Enter your choice: ");
             choice = scanner.nextInt();
             scanner.nextLine(); // Consume the newline after reading the integer
@@ -89,6 +95,9 @@ public class VirtualPetShelterApp {
                     groomPets(scanner, petShelter);
                     break;
                     case 13:
+                    robotAnimalCare(scanner, petShelter);
+                    break;
+                    case 14:
                     System.out.println("Thank you for visiting the Virtual Pet Shelter!");
                     break;
                 default:
@@ -103,7 +112,7 @@ public class VirtualPetShelterApp {
 
             tickAllPets(petShelter);
 
-        } while (choice != 13);
+        } while (choice != 14);
 
         scanner.close();
     }
@@ -127,7 +136,7 @@ public class VirtualPetShelterApp {
             pet.feed();
             if (pet.getType().equalsIgnoreCase("dog")) {
                 // Print the dog image only if the pet is a dog
-                System.out.println("            Wag  _,) WaG\r\n" + 
+                System.out.println("              _,) \r\n" + 
                         "        _..._.-;-'\r\n" + 
                         "     .-'     `(\r\n" + 
                         "    /      ;   \\\r\n" + 
@@ -214,26 +223,27 @@ public class VirtualPetShelterApp {
     
         if (petType.equalsIgnoreCase("all")) {
             for (VirtualPet pet : petShelter.values()) {
-                pet.putToSleep(8); // Assuming 8 hours of sleep for all pets
+                pet.putToSleep(8); // 8 hours of sleep for all pets
             }
             System.out.println("You've locked down the cages, and all animals are asleep.");
         } else {
             int count = 0;
             for (VirtualPet pet : petShelter.values()) {
                 if (pet.getType().equalsIgnoreCase(petType)) {
-                    pet.putToSleep(8); // Assuming 8 hours of sleep for specific pet type
+                    pet.putToSleep(8); // 8 hours of sleep for specific pet type
                     count++;
                 }
             }
             if (count > 0) {
-                System.out.println("All " + petType + "s are asleep.");
+                System.out.println("All " + petType + " animals have been charged for 8 hours.");
+                if (petType.equalsIgnoreCase("robot")) {
+                    System.out.println("All robot animals are fully charged.");
+                }
             } else {
                 System.out.println("No " + petType + " found in the shelter.");
             }
         }
     }
-    
-
 
     
     private static void checkPetStatus(Scanner scanner, Map<String, VirtualPet> petShelter) {
@@ -253,24 +263,44 @@ public class VirtualPetShelterApp {
 }
 
 private static void displayAllPetStatuses(Map<String, VirtualPet> petShelter) {
-    System.out.println("\n|----- All Pets' Statuses -----|");
-    System.out.println(String.format("%-8s| %-7s| %-7s| %-8s| %-7s| %-7s| %-7s", "Name", "Hunger", "Thirst", "Boredom", "Health", "Energy", "Hygiene"));
-    System.out.println("--------|-------|-------|--------|--------|--------|--------");
+    System.out.println("\n|------------------ All Organic Pets' Statuses -------------------|\n");
+    System.out.println(String.format("%-8s| %-7s| %-7s| %-8s| %-7s| %-7s| %-7s| %-7s", "Name", "Type", "Hunger", "Thirst", "Happiness", "Health", "Energy", "Hygiene"));
+    System.out.println("--------|--------|--------|----------|--------|--------|--------|---------");
 
     for (VirtualPet pet : petShelter.values()) {
-        String name = pet.getName();
-        int hunger = pet.getHunger();
-        int thirst = pet.getThirst();
-        int happiness = pet.getHappiness();
-        int health = pet.getHealth();
-        int sleep = pet.getSleep();
-        int hygiene = pet.getHygiene();
+        if (!pet.getType().equalsIgnoreCase("robot")) {
+            String name = pet.getName();
+            String type = pet.getType();
+            int hunger = pet.getHunger();
+            int thirst = pet.getThirst();
+            int happiness = pet.getHappiness();
+            int health = pet.getHealth();
+            int sleep = pet.getSleep();
+            int hygiene = pet.getHygiene();
 
-        System.out.println(String.format("%-8s| %-7d| %-7d| %-8d| %-7d| %-7d| %-7d", name, hunger, thirst, happiness, health, sleep, hygiene));
+            System.out.println(String.format("%-8s| %-7s| %-7d| %-7d| %-8d| %-7d| %-7d| %-7d", name, type, hunger, thirst, happiness, health, sleep, hygiene));
+        }
     }
 
-    System.out.println("|----------------------------|");
+    System.out.println("\n|-------------------------- Robot Pets' Statuses -----------------------------|\n");
+    System.out.println(String.format("%-8s| %-7s| %-8s| %-7s| %-7s|", "Name", "Type", "Happiness", "Battery", "Hygiene"));
+    System.out.println("--------|--------|----------|-------|------------|");
+
+    for (VirtualPet pet : petShelter.values()) {
+        if (pet.getType().equalsIgnoreCase("robot")) {
+            String name = pet.getName();
+            String type = pet.getType();
+            int happiness = pet.getHappiness();
+            int energy = pet.getSleep();
+            int hygiene = pet.getHygiene();
+
+            System.out.println(String.format("%-8s| %-7s| %-8d| %-7d| %-7d|", name, type, happiness, energy, hygiene));
+        }
+    }
+
+    System.out.println("\n|----------------------------------------------------------------------------|");
 }
+
 
 
     private static void takePetToVet(Scanner scanner, Map<String, VirtualPet> petShelter) {
@@ -385,6 +415,62 @@ private static void displayAllPetStatuses(Map<String, VirtualPet> petShelter) {
                     break;
                 default:
                     System.out.println("Invalid grooming option.");
+                    break;
+            }
+        }
+    }
+    
+    private static void robotAnimalCare(Scanner scanner, Map<String, VirtualPet> petShelter) {
+        System.out.print("Enter the name of the robot pet you want to take care of: ");
+        String petName = scanner.next();
+        VirtualPet pet = petShelter.get(petName);
+        
+        if (pet != null && pet.getType().equalsIgnoreCase("robot")) {
+            showRobotCareMenu(scanner, pet); // Show robot care menu for the specific robot pet
+        } else {
+            System.out.println("Robot pet not found in the shelter with the given name.");
+        }
+    }
+    
+    private static void showRobotCareMenu(Scanner scanner, VirtualPet robotPet) {
+        boolean caring = true;
+    
+        while (caring) {
+            System.out.println("\nRobot Care Options for " + robotPet.getName() + ":");
+            System.out.println("A. Oil the robot");
+            System.out.println("B. Give robot updates");
+            System.out.println("C. Clean the robot");
+            System.out.println("D. Charge the robot");
+            System.out.println("E. Exit robot care");
+    
+            System.out.print("Select robot care option: ");
+            String option = scanner.next().toUpperCase();
+    
+            switch (option) {
+                case "A":
+                    System.out.println(robotPet.getName() + " has been oiled.");
+                    // Perform oiling operation on the robot (add or subtract attributes as needed)
+                    robotPet.setHappiness(robotPet.getHappiness() + 2);
+                    robotPet.setSleep(robotPet.getSleep() + 10);
+                    break;
+                case "B":
+                    System.out.println(robotPet.getName() + " has been given updates.");
+                    robotPet.setHappiness(robotPet.getHappiness() + 3);
+                    break;
+                case "C":
+                    System.out.println(robotPet.getName() + " has been cleaned.");
+                    robotPet.setHygiene(robotPet.getHygiene() + 4);
+                    break;
+                case "D":
+                    System.out.println(robotPet.getName() + " has been charged.");
+                    robotPet.setSleep(robotPet.getSleep() + 20);
+                    break;
+                case "E":
+                    System.out.println("Exiting robot care for " + robotPet.getName() + ".");
+                    caring = false;
+                    break;
+                default:
+                    System.out.println("Invalid robot care option.");
                     break;
             }
         }

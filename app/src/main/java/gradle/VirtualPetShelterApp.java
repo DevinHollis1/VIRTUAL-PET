@@ -1,3 +1,5 @@
+package gradle;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -122,7 +124,7 @@ public class VirtualPetShelterApp {
     }
 
 
-    private static void letDogsGoPotty(Map<String, VirtualPet> petShelter) {
+    public static void letDogsGoPotty(Map<String, VirtualPet> petShelter) {
         System.out.println("\nYou let the dogs and tigers go potty.");
         for (VirtualPet pet : petShelter.values()) {
             if (pet.getType().equalsIgnoreCase("dog") || pet.getType().equalsIgnoreCase("tiger")) {
@@ -132,7 +134,7 @@ public class VirtualPetShelterApp {
     }
     
 
-    private static void feedPet(Scanner scanner, Map<String, VirtualPet> petShelter) {
+    public static void feedPet(Scanner scanner, Map<String, VirtualPet> petShelter) {
         System.out.print("Enter the name or type of the pet you want to feed: ");
         String input = scanner.next().toLowerCase();
     
@@ -210,7 +212,7 @@ public class VirtualPetShelterApp {
     
 
     // Play with a specific pet
-    private static void playWithPet(Scanner scanner, Map<String, VirtualPet> petShelter) {
+    public static void playWithPet(Scanner scanner, Map<String, VirtualPet> petShelter) {
         System.out.print("Enter the name of the pet you want to play with: ");
         String petName = scanner.next().toLowerCase();
     
@@ -229,7 +231,7 @@ public class VirtualPetShelterApp {
     }
     
 
-    private static void giveWaterToPet(Scanner scanner, Map<String, VirtualPet> petShelter) {
+    public static void giveWaterToPet(Scanner scanner, Map<String, VirtualPet> petShelter) {
         System.out.print("Enter the name or type of the pet you want to give water to: ");
         String input = scanner.next().toLowerCase();
     
@@ -253,7 +255,7 @@ public class VirtualPetShelterApp {
     }
     
     
-    private static void putAllPetsToSleepByType(Scanner scanner, Map<String, VirtualPet> petShelter) {
+    public static void putAllPetsToSleepByType(Scanner scanner, Map<String, VirtualPet> petShelter) {
         System.out.print("Enter the 'type' of the pet (type 'all' to put all pets to sleep): ");
         String petType = scanner.next().toLowerCase();
     
@@ -288,7 +290,7 @@ public class VirtualPetShelterApp {
         }
     }
 
-    private static void cleanCages(Scanner scanner, Map<String, VirtualPet> petShelter) {
+    public static void cleanCages(Scanner scanner, Map<String, VirtualPet> petShelter) {
         System.out.print("Enter the type of animal whose cage needs to be cleaned (or 'all' to clean all cages): ");
         String input = scanner.next().toLowerCase();
         
@@ -299,7 +301,7 @@ public class VirtualPetShelterApp {
         }
     }
     
-    private static void cleanAllCages(Map<String, VirtualPet> petShelter) {
+    public static void cleanAllCages(Map<String, VirtualPet> petShelter) {
         System.out.println("Cleaning all cages and litter boxes...");
         for (VirtualPet pet : petShelter.values()) {
             if (!pet.getType().equalsIgnoreCase("robot")) {
@@ -313,7 +315,7 @@ public class VirtualPetShelterApp {
     }
     
     
-    private static void cleanCagesByType(String type, Map<String, VirtualPet> petShelter) {
+    public static void cleanCagesByType(String type, Map<String, VirtualPet> petShelter) {
         int count = 0;
         for (VirtualPet pet : petShelter.values()) {
             if (!pet.getType().equalsIgnoreCase("robot") && pet.getType().equalsIgnoreCase(type)) {
@@ -334,7 +336,7 @@ public class VirtualPetShelterApp {
     }
 
     
-    private static void checkPetStatus(Scanner scanner, Map<String, VirtualPet> petShelter) {
+    public static void checkPetStatus(Scanner scanner, Map<String, VirtualPet> petShelter) {
     System.out.print("Enter the name of the pet you want to check (type 'all' for all pets): ");
     String petName = scanner.nextLine().trim(); // Use nextLine() to read the whole line.
 
@@ -350,7 +352,7 @@ public class VirtualPetShelterApp {
     }
 }
 
-private static void displayAllPetStatuses(Map<String, VirtualPet> petShelter) {
+public static void displayAllPetStatuses(Map<String, VirtualPet> petShelter) {
     System.out.println("\n|------------------------------- All Organic Pets' Statuses -------------------------------|\n");
     System.out.println(String.format("%-8s| %-7s| %-7s| %-8s|%-8s| %-7s| %-7s| %-7s| %-7s| %-7s|", "Name", "Type", "Hunger", "Thirst", "Happiness", "Sadness", "Health", "Energy", "Hygiene", "Mess"));
     System.out.println("--------|--------|--------|---------|---------|--------|--------|--------|--------|--------|");
@@ -368,7 +370,7 @@ private static void displayAllPetStatuses(Map<String, VirtualPet> petShelter) {
             int hygiene = pet.getHygiene();
             int mess = pet.getMess();
 
-            System.out.println(String.format("%-8s| %-7s| %-7d| %-8d| %-8d| %-7d| %-7d| %-7d| %-7d| %-7d|", name, type, hunger, thirst, happiness, sadness, health, energy, hygiene, mess));
+            System.out.println(String.format("%-8s| %-7s| %-7d| %-8d| %-8d| %-7d| %-7d| %-7d| %-7d| %-7d|", name, type, hunger, thirst, happiness, sadness, health, energy, hygiene, mess + "%"));
         }
     }
 
@@ -397,7 +399,7 @@ private static void displayAllPetStatuses(Map<String, VirtualPet> petShelter) {
 
 
 
-private static void takePetToVet(Scanner scanner, Map<String, VirtualPet> petShelter) {
+public static void takePetToVet(Scanner scanner, Map<String, VirtualPet> petShelter) {
     System.out.print("Enter the name of the pet you want to take to the vet: ");
     String petName = scanner.next();
     VirtualPet pet = petShelter.get(petName);
@@ -417,7 +419,7 @@ private static void takePetToVet(Scanner scanner, Map<String, VirtualPet> petShe
 }
 
 
-    private static void groomPets(Scanner scanner, Map<String, VirtualPet> petShelter) {
+    public static void groomPets(Scanner scanner, Map<String, VirtualPet> petShelter) {
         System.out.print("Enter the type or name of the pet you want to groom: ");
         String input = scanner.next();
     
@@ -450,7 +452,7 @@ private static void takePetToVet(Scanner scanner, Map<String, VirtualPet> petShe
     }
 
     
-    private static void adoptNewPet(Scanner scanner, Map<String, VirtualPet> petShelter) {
+    public static void adoptNewPet(Scanner scanner, Map<String, VirtualPet> petShelter) {
         System.out.print("Enter the type of the pet (dog, cat, lizard, bird, robot): ");
         String petType = scanner.next().toLowerCase(); // Convert to lowercase for consistent comparison
         System.out.print("Enter the name of the pet: ");
@@ -480,7 +482,7 @@ private static void takePetToVet(Scanner scanner, Map<String, VirtualPet> petShe
         scanner.nextLine();
     }
 
-    private static void displayAdoptionPaperwork(String adopterFirstName, String adoptersLastName, String phoneNumber, String address, String street, VirtualPet adoptedPet) {
+    public static void displayAdoptionPaperwork(String adopterFirstName, String adoptersLastName, String phoneNumber, String address, String street, VirtualPet adoptedPet) {
         System.out.println("\n|--- Adoption Paperwork ---|");
         System.out.println("Adopter's Name: " + adopterFirstName + " " + adoptersLastName);
         System.out.println("Phone Number: " + phoneNumber);
@@ -489,7 +491,7 @@ private static void takePetToVet(Scanner scanner, Map<String, VirtualPet> petShe
         System.out.println("|---------------------------|");
     }
     
-    private static void showGroomingMenu(Scanner scanner, VirtualPet pet) {
+    public static void showGroomingMenu(Scanner scanner, VirtualPet pet) {
         boolean grooming = true;
 
         if (pet.getType().equalsIgnoreCase("robot")) {
@@ -539,7 +541,7 @@ private static void takePetToVet(Scanner scanner, Map<String, VirtualPet> petShe
         }
     }
     
-    private static void robotAnimalCare(Scanner scanner, Map<String, VirtualPet> petShelter) {
+    public static void robotAnimalCare(Scanner scanner, Map<String, VirtualPet> petShelter) {
         System.out.print("Enter the name of the robot pet you want to take care of: ");
         String petName = scanner.next().toLowerCase();
         VirtualPet pet = petShelter.get(petName);
@@ -553,7 +555,7 @@ private static void takePetToVet(Scanner scanner, Map<String, VirtualPet> petShe
         }
     }
     
-    private static void showRobotCareMenu(Scanner scanner, VirtualPet robotPet) {
+    public static void showRobotCareMenu(Scanner scanner, VirtualPet robotPet) {
         boolean caring = true;
     
         while (caring) {
@@ -597,7 +599,7 @@ private static void takePetToVet(Scanner scanner, Map<String, VirtualPet> petShe
         }
     }
 
-    private static void donateNewPet(Scanner scanner, Map<String, VirtualPet> petShelter) {
+    public static void donateNewPet(Scanner scanner, Map<String, VirtualPet> petShelter) {
         System.out.print("Enter the type of pet (dog, cat, lizard, bird, robot): ");
         String petType = scanner.next().toLowerCase();
         System.out.print("Enter the name of the pet: ");
@@ -608,7 +610,7 @@ private static void takePetToVet(Scanner scanner, Map<String, VirtualPet> petShe
         System.out.println("You donated a new " + petType + " named " + petName + ".");
     }
 
-    private static void walkDogs(Scanner scanner, Map<String, VirtualPet> petShelter) {
+    public static void walkDogs(Scanner scanner, Map<String, VirtualPet> petShelter) {
         System.out.println("\nYou took the dogs for a walk.");
         
         int count = 0;
@@ -627,7 +629,7 @@ private static void takePetToVet(Scanner scanner, Map<String, VirtualPet> petShe
     }
     
 
-    private static void displayAllPets(Map<String, VirtualPet> petShelter) {
+    public static void displayAllPets(Map<String, VirtualPet> petShelter) {
         System.out.println("\n|----- All Animals in the Shelter! -----|");
         for (VirtualPet pet : petShelter.values()) {
             System.out.println("Type: " + pet.getType() + "    " + "Name:  " + pet.getName());
@@ -635,15 +637,9 @@ private static void takePetToVet(Scanner scanner, Map<String, VirtualPet> petShe
         System.out.println("|----------------------------------------|");
     }
 
-    private static void tickAllPets(Map<String, VirtualPet> petShelter) {
+    public static void tickAllPets(Map<String, VirtualPet> petShelter) {
         for (VirtualPet pet : petShelter.values()) {
             pet.tick();
         }
     }
 }
-
-
-
-
-
-
